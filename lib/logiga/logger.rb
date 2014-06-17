@@ -18,10 +18,11 @@ module Logiga
       end
       FileUtils.mkdir_p log_path
       @logger[type] = LogigaLogger.new(log_path.join(log_filename))
+      @logger[type].level = log_level
     end
 
-    def record(type, level, message)
-      logger_for(type).info(message.to_json)
+    def record(type, message, level=:info)
+      logger_for(type).send(level, message)
     end
 
     def logger_for(type)

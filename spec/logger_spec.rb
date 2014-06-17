@@ -2,19 +2,22 @@ require 'spec_helper'
 
 module Logiga
   describe Logger do
+    let(:type) { :test_logger }
+    let(:log_level) { ::Logger::INFO }
+
     let(:test_folder_string) { 'test_folder' }
     let(:test_folder) { Pathname.new('test_folder') }
-
     let(:path_string) { test_folder_string + '/test_path' }
     let(:path) { Pathname.new(path_string) }
 
     let(:filename) { 'test_logfilename' }
-    let(:type) { :test_logger }
+
+    let(:logger) { Logiga::Logger.logger_for(type) }
 
     before(:each) do
       FileUtils.mkdir_p test_folder
       Logiga::Logger.init do |logger|
-        logger.register(type, :info, path, filename)
+        logger.register(type, log_level, path, filename)
       end
     end
 
@@ -24,6 +27,34 @@ module Logiga
     end
 
     describe '#register' do
+      context 'given a type' do
+        let(:type) { :test_type_logger }
+        it 'should create logger with that type' do
+          expect(logger.nil?).to be_false
+        end
+      end
+
+      context 'given another type' do
+        let(:type) { :another_test_type_logger }
+        it 'should create logger with that type' do
+          expect(logger.nil?).to be_false
+        end
+      end
+
+      context 'given DEBUG log_level' do
+        let(:log_level) { ::Logger::DEBUG }
+        it 'should create logger with debug level' do
+          expect(logger.level).to be(::Logger::DEBUG)
+        end
+      end
+
+      context 'given ERROR log_level' do
+        let(:log_level) { ::Logger::ERROR }
+        it 'should create logger with debug level' do
+          expect(logger.level).to be(::Logger::ERROR)
+        end
+      end
+
       context 'given path as a pathname' do
         it 'should create test path' do
           expect(Dir.exists?(path)).to be_true
@@ -78,11 +109,10 @@ module Logiga
       context 'given non-existant type' do
         let(:test_type) { :me_not_exist }
         it 'should return nil' do
-          expect(logger.nil?).to be_true
+          expect(logger).to be_nil
         end
       end
     end
-
 
   end
 end

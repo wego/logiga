@@ -27,11 +27,14 @@ describe Logiga do
         expect(Logiga.for(:another_test_id)).to eq(logger)
       end
     end
+  end
 
+  describe '#for' do
     context 'given a non-existant id' do
       it 'should return nil' do
         expect(Logiga.for(:non_existant_id)).to be_nil
       end
     end
   end
+
 end

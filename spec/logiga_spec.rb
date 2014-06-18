@@ -16,15 +16,21 @@ describe Logiga do
 
   describe '#register' do
     context 'given an id' do
-      it 'should create id_logger method' do
+      it 'should return the logger' do
         expect(Logiga.for(:test_id)).to eq(logger)
       end
     end
 
     context 'given another id' do
       let(:id) { :another_test_id }
-      it 'should create another_id_logger method' do
+      it 'should return the other logger' do
         expect(Logiga.for(:another_test_id)).to eq(logger)
+      end
+    end
+
+    context 'given a non-existant id' do
+      it 'should return nil' do
+        expect(Logiga.for(:non_existant_id)).to be_nil
       end
     end
   end

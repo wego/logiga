@@ -13,7 +13,6 @@ module Logiga
 
   def init
     @loggers = {}
-    @noop_logger = NoopLogger.new
     yield self
   end
 
@@ -22,13 +21,10 @@ module Logiga
   end
 
   def for(id)
-    @loggers[id.to_sym] || @noop_logger
+    @loggers[id.to_sym]
   end
 
   def register(id, logger)
-    id = id.to_sym
-    raise ArgumentError.new("Duplicate logger id for #{id}") if @loggers[id]
-
-    @loggers[id] = logger
+    @loggers[id.to_sym] = logger
   end
 end

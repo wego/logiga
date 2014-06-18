@@ -27,9 +27,10 @@ module Logiga
     @loggers[id] = logger
 
     module_eval <<-EVAL, __FILE__, __LINE__ + 1
-      def self.#{id}_logger
+      def #{id}_logger
         @loggers[:#{id}]
       end
+      module_function :#{id}_logger
     EVAL
   end
 end

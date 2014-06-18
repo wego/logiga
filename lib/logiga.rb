@@ -21,14 +21,15 @@ module Logiga
   end
 
   def register(id, logger)
+    id = id.to_sym
+    raise ArgumentError.new("Duplicate logger id for #{id}") if @loggers[id]
+
     @loggers[id] = logger
-  end
 
-  def log(id, message, level = :info)
-    @loggers[id].send(level, message)
-  end
-
-  def logger_for(id)
-    @loggers[id]
+    module_eval <<-EVAL, __FILE__, __LINE__ + 1
+      def self.#{id}_logger
+        @loggers[:#{id}]
+      end
+    EVAL
   end
 end

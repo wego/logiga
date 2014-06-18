@@ -14,9 +14,9 @@ Call `Logiga.init` and call `register` to add your loggers like this:
 ```ruby
 Logiga.init do |logiga|
   folder = 'log'
-  logger1 = ::Logiga::JsonFileLogger.new(File.join(folder, 'rates.log'))
+  logger1 = ::Logiga::JsonFileLogger.new(File.join(folder, 'file1.log'))
   logiga.register(:one, logger1)
-  logger2 = ::Logiga::JsonFileLogger.new(File.join(folder, 'ecpc.log'))
+  logger2 = ::Logiga::JsonFileLogger.new(File.join(folder, 'file2.log'))
   logiga.register(:two, logger2)
 end
 ```

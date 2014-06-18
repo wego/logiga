@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.homepage      = "http://www.wego.com"
   s.summary       = "Wego Logging Module"
   s.description   = "Wego logging module"
-  s.required_ruby_version = '>= 2.0.0'
+  s.required_ruby_version = '>= 1.9.0'
 
   s.files         = `git ls-files`.split($/)
   s.executables   = s.files.grep(%r{^bin/}) { |f| File.basename(f) }

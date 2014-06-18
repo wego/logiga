@@ -4,7 +4,7 @@ require 'logger'
 # May not work on Windows, but let's keep it a secret
 module Logiga
   class NoopLogger < ::Logger
-    def initialize(name, shift_age = 7, shift_size = 1048576)
+    def initialize
       super('/dev/null')
     end
   end

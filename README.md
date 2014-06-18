@@ -9,7 +9,7 @@ Logiga also provides several basic logger such as `PlainFileLogger`, `JsonFileLo
 Usage
 =====
 
-Call `::Logiga.init` and call `register` to add your loggers like this:
+Call `Logiga.init` and call `register` to add your loggers like this:
 
 ```ruby
 Logiga.init do |logiga|

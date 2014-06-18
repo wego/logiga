@@ -1,30 +1,34 @@
-require 'loggers/file_logger'
-require 'loggers/plain_logger'
-require 'loggers/noop_logger'
-
 require 'logiga/version'
+
+require 'logiga/formatters/json_formatter'
+require 'logiga/formatters/plain_formatter'
+
+require 'logiga/file_logger'
+require 'logiga/json_file_logger'
+require 'logiga/plain_file_logger'
+require 'logiga/noop_logger'
 
 module Logiga
   module_function
 
   def init
-    @logger = {}
+    @loggers = {}
     yield self
   end
 
   def clear
-    @logger = {}
+    @loggers = {}
   end
 
-  def register(id)
-    @logger[id] = yield
+  def register(id, logger)
+    @loggers[id] = logger
   end
 
-  def log(id, message, level=:info)
-    logger_for(id).send(level, message)
+  def log(id, message, level = :info)
+    @loggers[id].send(level, message)
   end
 
   def logger_for(id)
-    @logger[id]
+    @loggers[id]
   end
 end

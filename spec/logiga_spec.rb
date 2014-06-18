@@ -7,10 +7,7 @@ describe Logiga do
 
   before(:each) do
     Logiga.init do |logiga|
-      logiga.register(id) do
-        logger = NoopLogger.new(STDOUT)
-        logger
-      end
+      logiga.register(id, Logiga::NoopLogger.new(STDOUT))
     end
   end
 
@@ -40,7 +37,7 @@ describe Logiga do
     context 'given correct id' do
       let(:test_id) { id }
       it 'should return a NoopLogger' do
-        expect(logger.is_a?(NoopLogger)).to be_true
+        expect(logger.is_a?(Logiga::NoopLogger)).to be_true
       end
     end
 

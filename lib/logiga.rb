@@ -12,7 +12,7 @@ module Logiga
   module_function
 
   def init
-    @loggers = {}
+    @loggers ||= {}
     yield self
   end
 

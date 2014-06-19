@@ -4,17 +4,27 @@ describe Logiga do
   let(:id) { :test_id }
   let(:logger) { Logiga::NoopLogger.new }
 
-  before do
-    Logiga.init do |logiga|
-      logiga.register(id, logger)
+  describe '#init' do
+    it 'should be able to init multiple times' do
+      Logiga.init { |logiga| logiga.register('first', logger) }
+      Logiga.init { |logiga| logiga.register('second', logger) }
+
+      expect(Logiga.for(:first)).to eq(logger)
+      expect(Logiga.for(:second)).to eq(logger)
     end
   end
 
-  after do
-    Logiga.clear
-  end
-
   describe '#register' do
+    before do
+      Logiga.init do |logiga|
+        logiga.register(id, logger)
+      end
+    end
+
+    after do
+      Logiga.clear
+    end
+
     context 'given an id' do
       it 'should return the logger' do
         expect(Logiga.for(:test_id)).to eq(logger)

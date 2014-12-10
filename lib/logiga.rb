@@ -7,6 +7,8 @@ require 'logiga/file_logger'
 require 'logiga/json_file_logger'
 require 'logiga/plain_file_logger'
 require 'logiga/noop_logger'
+require 'logiga/syslog_logger'
+require 'logiga/json_syslog_logger'
 
 module Logiga
   module_function
